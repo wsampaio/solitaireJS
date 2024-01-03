@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<title>animate demo</title>
+		<style>
+
+			div.carta {
+				background-color: red;
+				width: 40px;
+				height: 80px;
+				padding: 5px;
+				user-select: none;
+			}
+		
+			div {
+				position: absolute;
+				background-color: #abc;
+				left: 50px;
+				width: 90px;
+				height: 90px;
+				margin: 5px;
+			}
+		</style>
+		<script src="./jquery-3.7.0.min.js"></script>
+	</head>
+	<body>
+
+		<button id="left">&laquo;</button>
+		<button id="right">&raquo;</button>
+		<div class="block"></div>
+
+		<script>
+			class Retangulo {
+				constructor(altura, largura) {
+					this.altura = altura;
+					this.largura = largura;
+				}
+				
+			}
+
+			class Carta {
+			
+				//const naipesPrint];
+				//let numsPrint = []
+			
+				constructor(naipe, numero) {
+					this.naipe = naipe;
+					this.numero = numero;
+					
+					this.naipesPrint = ["&spades;", "&clubs;", "&hearts;", "&diams;"];
+					this.numsPrint = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "0", "J", "Q", "K"]; 
+				}
+				
+				printCarta(){
+					return "" +
+						"<div id='div" + this.naipe + "-" + this.numero + "' class='carta' draggable='true'>" +
+							this.numsPrint[this.numero] +
+							this.naipesPrint[this.naipe] +
+						"</div>";
+				}
+			}
+
+			class Cartas {
+			
+				#cartas = [];
+			
+				constructor(altura, largura) {
+					this.altura = altura;
+					this.largura = largura;
+
+					//this.#cartas = [];
+					
+					for (let i=0; i<4; i++){
+						for(let j=0; j<13; j++){
+							this.#cartas.push(new Carta(i, j));
+						}
+					}
+
+					console.log(
+						this.#cartas[0].naipesPrint[0]
+					);
+
+				}
+				
+				getCartas(){
+					return this.#cartas;
+				}
+			}
+		</script>
+
+
+		<script>
+		
+			let baralho = new Cartas();
+
+			cartas = baralho.getCartas();
+			
+			console.log(baralho.getCartas()[0].printCarta())
+			
+			for (var i=0; i<5; i++){
+				$("body").append(baralho.getCartas()[i].printCarta());
+				console.log($("#div0-" + i ))
+				$("#div0-" + i )
+					.css("top",  (100*i) + "px")
+					.css("left", "220px")
+					.on( "click", function() {
+						$( this ).animate({ 
+							"left": "+=500px",
+							"top": "+=500px" 
+						}, 500 );
+					});
+			}
+
+
+			$( "#right" ).on( "click", function() {
+				$( ".block" ).animate({ 
+					"left": "+=500px",
+					"top": "+=500px" 
+				}, "slow" );
+			});
+	 
+			$( "#left" ).on( "click", function(){
+				$( ".block" ).animate({ "left": "-=50px" }, "slow" );
+			});
+		</script>
+	</body>
+</html>
